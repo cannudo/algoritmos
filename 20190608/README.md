@@ -77,3 +77,10 @@ potência. Desenvolva um algoritmo que leia a largura e a profundidade de uma sa
 a potência da lâmpada que deve ser usada.**
 
 `EX11.c`
+
+
+## Questão 13:
+
+**Desenvolva um algoritmo que leia um número inteiro que corresponda a uma data no formato ddmmaaaa e imprima cada valor separado. Por exemplo: se o usuário informar 19042003 o algoritmo deverá mostrar 19 de 04 de 2003.**
+
+`EX13.c`
