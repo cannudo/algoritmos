@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,14 +17,14 @@ void desalocar_memoria_matriz(int** matriz, int linhas) {
   free(matriz);
 }
 
-int backtracking(int linhas, int colunas, int** matriz, int linha, int coluna, int *caminho) {
+int backtracking(int linhas, int colunas, int** matriz, int linha, int coluna) {
+    // printf("DEBUG: (%d, %d) (%d, %d)\n", linha, coluna, linhas, colunas);
   int saida = (linha == linhas - 1 && coluna == colunas - 1);
-  int limite_superior = (coluna < 0);
+  int limite_superior = (linha < 0);
   int limite_inferior = (linha >= linhas);
   int limite_direito = (coluna >= colunas);
-  int parede = (matriz[linha][coluna] == 1);
-  
-  if (parede || limite_superior || limite_inferior || limite_direito) {
+  int limite_esquerdo = (coluna < 0);
+  if (limite_superior || limite_inferior || limite_direito || limite_esquerdo || (matriz[linha][coluna] != 0)) {
     return 0;
   } else if (saida) {
     return 1;
@@ -32,10 +33,10 @@ int backtracking(int linhas, int colunas, int** matriz, int linha, int coluna, i
   matriz[linha][coluna] = 9;
 
   int tem_saida = 0;
-  tem_saida = backtracking(linhas, colunas, matriz, linha + 1, coluna, caminho) ||
-  backtracking(linhas, colunas, matriz, linha, coluna + 1, caminho) ||
-  backtracking(linhas, colunas, matriz, linha - 1, coluna, caminho) ||
-  backtracking(linhas, colunas, matriz, linha, coluna - 1, caminho);
+  tem_saida = backtracking(linhas, colunas, matriz, linha + 1, coluna) ||
+  backtracking(linhas, colunas, matriz, linha, coluna + 1) ||
+  backtracking(linhas, colunas, matriz, linha - 1, coluna) ||
+  backtracking(linhas, colunas, matriz, linha, coluna - 1);
   
   matriz[linha][coluna] = 0;
   return tem_saida;
@@ -68,7 +69,7 @@ int main(void) {
   ler_inteiro(&colunas);
   int** matriz = alocar_memoria_matriz(linhas, colunas);
   ler_matriz(linhas, colunas, matriz);
-  int caminho = 0;
-  printf("%d\n", backtracking(linhas, colunas, matriz, 0, 0, &caminho));
+  printf("%d\n", backtracking(linhas, colunas, matriz, 0, 0));
+  desalocar_memoria_matriz(matriz, linhas);
   return 0;
 }
